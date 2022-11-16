@@ -9,7 +9,6 @@ import {
   Param,
   Delete,
   Res,
-  HttpCode,
   HttpStatus,
 } from '@nestjs/common';
 import { CreateCatDto } from '../dto/create-cat.dto';
@@ -40,8 +39,11 @@ export class CatsController {
   }
 
   @Get()
-  findAll(@Query() query: any) {
-    return this.catsService.findAll();
+  async findAll(@Query() query: any, @Res() res: Response) {
+    res.status(HttpStatus.OK).json({
+      status: 'success!',
+      cats: await this.catsService.findAll(),
+    });
   }
 
   //   @Get(':id')
