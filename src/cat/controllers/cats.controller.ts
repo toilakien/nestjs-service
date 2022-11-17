@@ -13,6 +13,7 @@ import {
 } from '@nestjs/common';
 import { CreateCatDto } from '../dto/create-cat.dto';
 import { Response } from 'express';
+import { UpdateCatDto } from '../dto/update-cat.dto';
 @Controller('cats')
 export class CatsController {
   constructor(private catsService: CatsService) {}
@@ -41,20 +42,23 @@ export class CatsController {
   @Get()
   async findAll(@Query() query: any, @Res() res: Response) {
     res.status(HttpStatus.OK).json({
-      status: 'success!',
+      status: ' get success!',
       cats: await this.catsService.findAll(),
     });
   }
 
-  //   @Get(':id')
-  //   findOne(@Param('id') id: string) {
-  //     return `This action returns a #${id} cat`;
-  //   }
+  @Delete(':id')
+  async delete(@Param('id') id: string, @Res() res: Response) {
+    res.status(HttpStatus.OK).json({
+      status: 'Delete successfully !',
+      cats: await this.catsService.delete(id),
+    });
+  }
 
-  //   @Put(':id')
-  //   update(@Param('id') id: string, @Body() updateCatDto: UpdateCatDto) {
-  //     return `This action updates a #${id} cat`;
-  //   }
+  @Put(':id')
+ async update(@Param('id') id: string, @Body() updateCatDto: UpdateCatDto) {
+    return this.catsService.update(id, updateCatDto);
+  }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
