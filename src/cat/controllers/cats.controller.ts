@@ -38,7 +38,6 @@ export class CatsController {
       });
     }
   }
-
   @Get()
   async findAll(@Query() query: any, @Res() res: Response) {
     res.status(HttpStatus.OK).json({
@@ -56,10 +55,9 @@ export class CatsController {
   }
 
   @Put(':id')
- async update(@Param('id') id: string, @Body() updateCatDto: UpdateCatDto) {
+  async update(@Param('id') id: string, @Body() updateCatDto: UpdateCatDto) {
     return this.catsService.update(id, updateCatDto);
   }
-
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.catsService.delete(id);
