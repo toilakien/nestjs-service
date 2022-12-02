@@ -16,7 +16,7 @@ export class AuthenicationController {
           status: 'fail',
           message: 'User đã tồn tại !',
         })
-      : res.status(HttpStatus.OK).json({
+      : res.status(HttpStatus.CREATED).json({
           auth: await this.administrastorService.create({
             username: body.username,
             password: fn_encode(body.password),
@@ -31,6 +31,7 @@ export class AuthenicationController {
     account && fn_checkcode(body.password, account.password)
       ? res.status(HttpStatus.OK).json({
           status: 'sucess',
+          user: account,
           token: jwt.sign({ usename: body.username }, process.env.SERCRET),
         })
       : res.status(HttpStatus.BAD_REQUEST).json({
